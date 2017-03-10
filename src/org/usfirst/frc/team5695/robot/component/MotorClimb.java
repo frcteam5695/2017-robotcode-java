@@ -2,7 +2,8 @@ package org.usfirst.frc.team5695.robot.component;
 
 import org.usfirst.frc.team5695.robot.Robot;
 
-import edu.wpi.first.wpilibj.MotorSafety;
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.MotorSafetyHelper;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.TalonSRX;
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.TalonSRX;
 public class MotorClimb implements IElement {
 	private boolean init = false;
 	
-	private TalonSRX left, right;
+	private CANTalon left, right;
 	private RobotDrive drive;
 	private  MotorSafetyHelper safeLeft,safeRight;
 	
@@ -19,8 +20,8 @@ public class MotorClimb implements IElement {
 	public void init(){
 		if(init){throw Robot.EXalreadyInit();}
 		init = true;
-		(safeLeft = new  MotorSafetyHelper(left = new TalonSRX(4))) .setSafetyEnabled(true);
-		(safeRight = new  MotorSafetyHelper(right = new TalonSRX(5))) .setSafetyEnabled(true);;
+		(safeLeft = new  MotorSafetyHelper(left = new CANTalon(4))) .setSafetyEnabled(true);
+		(safeRight = new  MotorSafetyHelper(right = new CANTalon(5))) .setSafetyEnabled(true);;
 	
 	
 		

@@ -2,6 +2,8 @@ package org.usfirst.frc.team5695.robot.component;
 
 import org.usfirst.frc.team5695.robot.Robot;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.TalonSRX;
 
@@ -9,7 +11,7 @@ import edu.wpi.first.wpilibj.TalonSRX;
 
 	private boolean init = false;
 	private RobotDrive robotDrive;
-	private TalonSRX frontLeft, frontRight, backLeft, backRight;
+	private CANTalon frontLeft, frontRight, backLeft, backRight;
 	
 	
 	protected MotorDrive(){}
@@ -17,11 +19,11 @@ import edu.wpi.first.wpilibj.TalonSRX;
 	public void init(){
 		if(init){throw Robot.EXalreadyInit();}
 		init = true;
-		frontLeft = new TalonSRX(0);
-		backLeft = new TalonSRX(3);
+		frontLeft = new CANTalon(0);
+		backLeft = new CANTalon(3);
 		
-		(frontRight = new TalonSRX(1)).setInverted(true);
-		(backRight = new TalonSRX(2)).setInverted(true);
+		(frontRight = new CANTalon(1)).setInverted(true);
+		(backRight = new CANTalon(2)).setInverted(true);
 				
 		frontRight.setInverted(true);
 		robotDrive = new RobotDrive(frontLeft, backLeft,frontRight,  backRight);
