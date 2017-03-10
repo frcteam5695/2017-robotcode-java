@@ -1,0 +1,58 @@
+package org.usfirst.frc.team5695.robot.component;
+
+import org.usfirst.frc.team5695.robot.Robot;
+
+import edu.wpi.first.wpilibj.MotorSafety;
+import edu.wpi.first.wpilibj.MotorSafetyHelper;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.TalonSRX;
+
+public class MotorClimb implements IElement {
+	private boolean init = false;
+	
+	private TalonSRX left, right;
+	private RobotDrive drive;
+	private  MotorSafetyHelper safeLeft,safeRight;
+	
+	protected MotorClimb(){}
+	@Override
+	public void init(){
+		if(init){throw Robot.EXalreadyInit();}
+		init = true;
+		(safeLeft = new  MotorSafetyHelper(left = new TalonSRX(4))) .setSafetyEnabled(true);
+		(safeRight = new  MotorSafetyHelper(right = new TalonSRX(5))) .setSafetyEnabled(true);;
+	
+	
+		
+	
+
+	}
+
+	
+	public void setEnabled(boolean on){
+		if(!init){throw Robot.EXnotInit();}
+		double in = on? -1: 0;
+		left.set(in);
+		right.set(in);
+		
+	}
+	
+	public boolean getSpeed(){
+		if(!init){throw Robot.EXnotInit();}
+		return (left.get() + right.get()) != 0.0;
+	}
+	
+	@Override
+	public void clean() {
+		if(!init){throw Robot.EXnotInit();}
+		init = false;
+		
+		left.free();
+		right.free();
+		
+		left = null;
+		right = null;
+	
+		
+	}
+}
