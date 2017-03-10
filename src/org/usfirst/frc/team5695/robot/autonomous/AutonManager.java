@@ -16,11 +16,12 @@ public class AutonManager {
 	private boolean init = false;
 	private ImmutableList<AutonMode> modes ;
 	private Robot robot;
-	
+	private ComponentManager components;
 	
 	public AutonManager(Robot robot){
+		Validate.notNull(robot,"Dependencies cannot be null");
 		this.robot = robot;
-	
+		components = robot.getComponentManager();
 
 	}
 	
@@ -57,36 +58,81 @@ public class AutonManager {
 	
 	private AutonMode[] makeModes(){
 		Validate.isTrue(!init,ERRORnot);
-		ComponentManager components = robot.getComponentManager();
-		return new AutonMode[]{
-				AutonMode.builder().setDescription("Do nothing")
-				.build(),
-				//////////////////////////////////////////
-				AutonMode.builder().setDescription("TheFirst")
-				.addSteps( 
-						()->{ components.getMotorDrive().driveLat(1, 1);},
-						
-						()->{
-							try {
-								Thread.sleep(3000);
-							} catch (InterruptedException e) {
-								
-								e.printStackTrace();
-							}
-							Timer.delay(3);
-						},
-						
-						()->{ components.getMotorDrive().driveLat(0,0);}
-					
-						).build(),
-				///////////////////////////////////////////////////
-				/// more stuff here
-				
-			};
+
+		return new AutonMode[]{blankAuto,driveForward,gearMid,gearLeft,gearRight};
 	}
 	
+// ()-> {},
+	public final AutonMode
+	
+	driveForward = AutonMode.builder().setDescription("Drive forward").addSteps( 
+					()->{ components.getMotorDrive().driveForward(.5);},
+					()->{Timer.delay(3);},
+					()->{ components.getMotorDrive().halt();}
+					).build(),
+			
+	blankAuto =  AutonMode.builder().setDescription("The blank Auton").build(),
+			
+	gearMid = AutonMode.builder().setDescription("Middle gear position").addSteps(
+					()-> components.getMotorDrive().driveLat(0, .3),
+					()-> {Timer.delay(2);},
+					()-> {components.getMotorDrive().halt();},
+					()-> {components.getSolenoidGear().setOpen(true);},
+					()-> {Timer.delay(.5);},
+					()-> {components.getMotorDrive().driveForward(-.3);},
+					()-> {Timer.delay(.5);},
+					()-> {components.getMotorDrive().halt();},
+					()-> {components.getSolenoidGear().setOpen(false);}
+					
+					).build(),
+			
+	gearRight =  AutonMode.builder().setDescription("Right gear position").addSteps(
+			()-> {components.getMotorDrive().driveForward(.4);},
+			()-> {Timer.delay(4);},
+			()-> {components.getMotorDrive().halt();},
+			()-> {components.getMotorDrive().driveTurn(-0.3);},
+			()-> {Timer.delay(1);},
+			()-> {components.getMotorDrive().driveForward(0.4);},
+			()-> {Timer.delay(1);},
+			()-> {components.getMotorDrive().halt();},
+			()-> {components.getSolenoidGear().open();},
+			()-> {Timer.delay(.25);},
+			()-> {components.getMotorDrive().driveForward(-.3);},
+			()-> {Timer.delay(.25);},
+			()-> {components.getMotorDrive().halt();},
+			()-> {Timer.delay(.5);},
+			()-> {components.getSolenoidGear().close();},
+			()-> {Timer.delay(.25);}
+			).build(),
+	gearLeft =  AutonMode.builder().setDescription("Left gear position").addSteps(
+			()-> {components.getMotorDrive().driveForward(.4);},
+			()-> {Timer.delay(4);},
+			()-> {components.getMotorDrive().halt();},
+			()-> {components.getMotorDrive().driveTurn(0.3);},
+			()-> {Timer.delay(1);},
+			()-> {components.getMotorDrive().driveForward(0.4);},
+			()-> {Timer.delay(1);},
+			()-> {components.getMotorDrive().halt();},
+			()-> {components.getSolenoidGear().open();},
+			()-> {Timer.delay(.25);},
+			()-> {components.getMotorDrive().driveForward(-.3);},
+			()-> {Timer.delay(.25);},
+			()-> {components.getMotorDrive().halt();},
+			()-> {Timer.delay(.5);},
+			()-> {components.getSolenoidGear().close();},
+			()-> {Timer.delay(.25);}
+			
+					
+		).build()
 	
 	
+	;
+	
+			
+			
+			
+			
+			
 
 	
 }

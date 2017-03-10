@@ -29,21 +29,72 @@ import edu.wpi.first.wpilibj.TalonSRX;
 		
 	}
 	
-	public void drive(double x, double y, double rotation){
+	/**
+	 * Rotation[ -1.0,1.0]
+	 * -1  = Left
+	 *  1 = right 
+	 * @param strafe the sideways motion of the drive [-1,1] 
+	 * -1 is left 
+	 *  1 is Right
+	 * @param forward the forward motion of the drive [-1,1] 
+	 * -1 is backwards
+	 *  1  is forwards
+	 * **/
+	public void drive(double strafe, double forward, double rotation){
 		if(!init){throw Robot.EXnotInit();}
-			robotDrive.mecanumDrive_Cartesian(x, y, rotation,0.0);
+			robotDrive.mecanumDrive_Cartesian(strafe, forward, rotation,0.0);
 	}
 	
-	public void driveLat(double x, double y){
+	/***
+	 * @param strafe the sideways motion of the drive [-1,1] 
+	 * -1 is left & 1 is Right
+	 * @param forward the forward motion of the drive [-1,1] 
+	 * -1 is backwards
+	 * 1  is forwards
+	 * */
+	public void driveLat(double strafe, double forward){
 		if(!init){throw Robot.EXnotInit();}
-		drive(x,y,0);
+		drive(strafe,forward,0);
 	}
 	
+	/***
+	 * @param forward the forward motion of the drive [-1,1] 
+	 * -1 is backwards
+	 * 1  is forwards
+	 * */
+	public void driveForward( double forward){
+		if(!init){throw Robot.EXnotInit();}
+		drive(0,forward,0);
+	}
+	
+	/***
+	 * @param strafe the sideways motion of the drive [-1,1] 
+	 * -1 is left 
+	 *  1 is Right
+	 * */
+	public void driveStrafe( double strafe){
+		if(!init){throw Robot.EXnotInit();}
+		drive(strafe,0,0);
+	}
+	
+	/**
+	 *@param rotation [ -1.0,1.0]
+	 *  -1  = Left
+	 *  1 = ri ght 
+	 * **/
 	public void driveTurn(double rotation){
 		if(!init){throw Robot.EXnotInit();}
 		drive(0,0,rotation);
 	
 	}
+	
+	/**
+	 * Stops all of the drive motors
+	 * **/
+	public void halt(){
+		drive(0,0,0);
+	}
+	
 	@Override
 	public void clean() {
 		if(!init){throw Robot.EXnotInit();}
