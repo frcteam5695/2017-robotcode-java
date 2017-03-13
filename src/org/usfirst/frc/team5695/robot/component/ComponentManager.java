@@ -27,7 +27,7 @@ public class ComponentManager implements IElement{
 	public void init(){
 		if(init){throw Robot.EXalreadyInit();}
 		init = true;
-		(motorDrive = new MotorDrive()).init();
+		(motorDrive = new MotorDrivePWM()).init();
 		(controller = new Controller()).init();
 		(motorClimb = new MotorClimb()).init();
 		(gearSol = new SolenoidGear()).init();

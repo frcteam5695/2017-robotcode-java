@@ -7,29 +7,11 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.TalonSRX;
 
- public class MotorDrive implements IElement {
+ public interface MotorDrive extends IElement {
 
-	private boolean init = false;
-	private RobotDrive robotDrive;
-	private CANTalon frontLeft, frontRight, backLeft, backRight;
-	
-	
-	protected MotorDrive(){}
 
-	public void init(){
-		if(init){throw Robot.EXalreadyInit();}
-		init = true;
-		frontLeft = new CANTalon(0);
-		backLeft = new CANTalon(3);
-		
-		(frontRight = new CANTalon(1)).setInverted(true);
-		(backRight = new CANTalon(2)).setInverted(true);
-				
-		frontRight.setInverted(true);
-		robotDrive = new RobotDrive(frontLeft, backLeft,frontRight,  backRight);
-		
-		
-	}
+
+	public void init();
 	
 	/**
 	 * Rotation[ -1.0,1.0]
@@ -42,10 +24,7 @@ import edu.wpi.first.wpilibj.TalonSRX;
 	 * -1 is backwards
 	 *  1  is forwards
 	 * **/
-	public void drive(double strafe, double forward, double rotation){
-		if(!init){throw Robot.EXnotInit();}
-			robotDrive.mecanumDrive_Cartesian(strafe, forward, rotation,0.0);
-	}
+	public void drive(double strafe, double forward, double rotation);
 	
 	/***
 	 * @param strafe the sideways motion of the drive [-1,1] 
@@ -54,62 +33,34 @@ import edu.wpi.first.wpilibj.TalonSRX;
 	 * -1 is backwards
 	 * 1  is forwards
 	 * */
-	public void driveLat(double strafe, double forward){
-		if(!init){throw Robot.EXnotInit();}
-		drive(strafe,forward,0);
-	}
+	public void driveLat(double strafe, double forward);
 	
 	/***
 	 * @param forward the forward motion of the drive [-1,1] 
 	 * -1 is backwards
 	 * 1  is forwards
 	 * */
-	public void driveForward( double forward){
-		if(!init){throw Robot.EXnotInit();}
-		drive(0,forward,0);
-	}
+	public void driveForward( double forward);
 	
 	/***
 	 * @param strafe the sideways motion of the drive [-1,1] 
 	 * -1 is left 
 	 *  1 is Right
 	 * */
-	public void driveStrafe( double strafe){
-		if(!init){throw Robot.EXnotInit();}
-		drive(strafe,0,0);
-	}
-	
+	public void driveStrafe( double strafe);
 	/**
 	 *@param rotation [ -1.0,1.0]
 	 *  -1  = Left
 	 *  1 = ri ght 
 	 * **/
-	public void driveTurn(double rotation){
-		if(!init){throw Robot.EXnotInit();}
-		drive(0,0,rotation);
-	
-	}
+	public void driveTurn(double rotation);
 	
 	/**
 	 * Stops all of the drive motors
 	 * **/
-	public void halt(){
-		drive(0,0,0);
-	}
+	public void halt();
 	
 	@Override
-	public void clean() {
-		if(!init){throw Robot.EXnotInit();}
-		init = false;
-		
-		robotDrive.free();
-		
-		frontLeft = null;
-		frontRight = null;
-		backLeft = null;
-		backRight = null;
-		robotDrive = null;
-
-	}
+	public void clean() ;
 
 }
