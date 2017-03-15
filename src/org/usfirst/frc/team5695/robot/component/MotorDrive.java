@@ -63,4 +63,10 @@ import edu.wpi.first.wpilibj.TalonSRX;
 	@Override
 	public void clean() ;
 
+	/**
+	 * 
+	 * Tells the robot to strafe torwards a direction with a given speed.
+	 * *****
+	 * **/
+	public void driveAngle(double angle, double speed);
 }

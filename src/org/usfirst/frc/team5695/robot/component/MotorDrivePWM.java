@@ -97,6 +97,15 @@ import edu.wpi.first.wpilibj.TalonSRX;
 	}
 	
 	/**
+	 * 
+	 * Tells the robot to strafe torwards a direction with a given speed.
+	 * *****
+	 * **/
+	public void driveAngle(double angle, double speed){
+		robotDrive.mecanumDrive_Polar(speed, angle,0);
+	}
+	
+	/**
 	 * Stops all of the drive motors
 	 * **/
 	@Override

@@ -65,65 +65,63 @@ public class AutonManager {
 // ()-> {},
 	public final AutonMode
 	
-	driveForward = AutonMode.builder().setDescription("Drive forward").addSteps( 
-					()->{ components.getMotorDrive().driveForward(.5);},
-					()->{Timer.delay(3);},
-					()->{ components.getMotorDrive().halt();}
-					).build(),
+	driveForward = AutonMode.builder(robot).setDescription("Drive forward")
+	.driveForward(0.5)
+	.delaySecond(3)
+	.driveHalt()
+	.build(),
 			
-	blankAuto =  AutonMode.builder().setDescription("The blank Auton").build(),
+	blankAuto =  AutonMode.builder(robot).setDescription("The blank Auton").build(),
 			
-	gearMid = AutonMode.builder().setDescription("Middle gear position").addSteps(
-					()-> components.getMotorDrive().driveLat(0, .3),
-					()-> {Timer.delay(2);},
-					()-> {components.getMotorDrive().halt();},
-					()-> {components.getSolenoidGear().setOpen(true);},
-					()-> {Timer.delay(.5);},
-					()-> {components.getMotorDrive().driveForward(-.3);},
-					()-> {Timer.delay(.5);},
-					()-> {components.getMotorDrive().halt();},
-					()-> {components.getSolenoidGear().setOpen(false);}
-					
-					).build(),
+	gearMid = AutonMode.builder(robot).setDescription("Middle gear position")
+	.driveForward(.3)
+	.delaySecond(2)
+	.driveHalt()
+	.gearOpen()
+	.delay(500)
+	.driveForward(-0.3)
+	.delay(500)
+	.driveHalt()
+	.gearClose()
+	.build(),
 			
-	gearRight =  AutonMode.builder().setDescription("Right gear position").addSteps(
-			()-> {components.getMotorDrive().driveForward(.4);},
-			()-> {Timer.delay(4);},
-			()-> {components.getMotorDrive().halt();},
-			()-> {components.getMotorDrive().driveTurn(-0.3);},
-			()-> {Timer.delay(1);},
-			()-> {components.getMotorDrive().driveForward(0.4);},
-			()-> {Timer.delay(1);},
-			()-> {components.getMotorDrive().halt();},
-			()-> {components.getSolenoidGear().open();},
-			()-> {Timer.delay(.25);},
-			()-> {components.getMotorDrive().driveForward(-.3);},
-			()-> {Timer.delay(.25);},
-			()-> {components.getMotorDrive().halt();},
-			()-> {Timer.delay(.5);},
-			()-> {components.getSolenoidGear().close();},
-			()-> {Timer.delay(.25);}
-			).build(),
-	gearLeft =  AutonMode.builder().setDescription("Left gear position").addSteps(
-			()-> {components.getMotorDrive().driveForward(.4);},
-			()-> {Timer.delay(4);},
-			()-> {components.getMotorDrive().halt();},
-			()-> {components.getMotorDrive().driveTurn(0.3);},
-			()-> {Timer.delay(1);},
-			()-> {components.getMotorDrive().driveForward(0.4);},
-			()-> {Timer.delay(1);},
-			()-> {components.getMotorDrive().halt();},
-			()-> {components.getSolenoidGear().open();},
-			()-> {Timer.delay(.25);},
-			()-> {components.getMotorDrive().driveForward(-.3);},
-			()-> {Timer.delay(.25);},
-			()-> {components.getMotorDrive().halt();},
-			()-> {Timer.delay(.5);},
-			()-> {components.getSolenoidGear().close();},
-			()-> {Timer.delay(.25);}
-			
-					
-		).build()
+	gearRight =  AutonMode.builder(robot).setDescription("Right gear position")
+	.driveForward(.4)
+	.delaySecond(4)
+	.driveHalt()
+	.driveTurn(-0.3)
+	.delaySecond(1)
+	.driveForward(0.4)
+	.delaySecond(1)
+	.driveHalt()
+	.gearOpen()
+	.delay(250)
+	.driveForward(-0.3)
+	.delay(250)
+	.driveHalt()
+	.delay(500)
+	.gearClose()
+	.delay(250)
+	.build(),
+	
+	gearLeft =  AutonMode.builder(robot).setDescription("Left gear position")
+	.driveForward(.4)
+	.delaySecond(4)
+	.driveHalt()
+	.driveStrafe(0.3)
+	.delaySecond(1)
+	.driveForward(.4)
+	.delaySecond(1)
+	.driveHalt()
+	.gearOpen()
+	.delay(250)
+	.driveForward(0.3)
+	.delay(250)
+	.driveHalt()
+	.delay(500)
+	.gearClose()
+	.delay(250)
+	.build()
 	
 	
 	;

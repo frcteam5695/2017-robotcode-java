@@ -29,7 +29,16 @@ public class MotorClimb implements IElement {
 
 	}
 
+	public void enable(){
+		this.setEnabled(true);
+		
+	}
 	
+	
+	public void disable(){
+		this.setEnabled(false);
+		
+	}
 	public void setEnabled(boolean on){
 		if(!init){throw Robot.EXnotInit();}
 		double in = on? -1: 0;
@@ -48,8 +57,6 @@ public class MotorClimb implements IElement {
 		if(!init){throw Robot.EXnotInit();}
 		init = false;
 		
-		left.free();
-		right.free();
 		
 		left = null;
 		right = null;
