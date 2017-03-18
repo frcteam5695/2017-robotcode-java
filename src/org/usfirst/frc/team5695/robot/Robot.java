@@ -39,15 +39,7 @@ public final class Robot extends IterativeRobot {
 		}
 	};
 	
-	private Robot(){
-		super();
-		
-		dashboard = new Dashboard(this);
-		instance = this;
-		components = new ComponentManager();
 
-				
-	}
 	
 	public static Robot get(){
 		return instance;
@@ -68,9 +60,17 @@ public final class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		dashboard = new Dashboard(this);
+		instance = this;
+		(components = new ComponentManager()).init();;
+		
+		
+		(autonManager = new AutonManager(this)).init();;
+		
 		running  = true;
 		mainLoop.start();
-		components.init();
+		
+		
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser); 

@@ -1,25 +1,24 @@
 package org.usfirst.frc.team5695.robot.autonomous;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.Validate;
 import org.usfirst.frc.team5695.robot.Robot;
 import org.usfirst.frc.team5695.robot.component.ComponentManager;
 
-import com.google.common.collect.ImmutableList;
-
-import edu.wpi.first.wpilibj.NamedSendable;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.tables.ITable;
 
 public final class AutonMode {
-	private final ImmutableList<Step> steps;
+	private final List<Step> steps;
 	private final String description;
 	
 	private AutonMode(List<Step> steps, String desc){
-		this.steps = ImmutableList.copyOf(steps);
+		this.steps = Collections.unmodifiableList(steps);
+		
 		description = desc;
 		
 	}
@@ -28,7 +27,7 @@ public final class AutonMode {
 	}
 	
 	
-	public ImmutableList<Step> getSteps(){
+	public List<Step> getSteps(){
 		return steps;
 	}
 	
@@ -46,6 +45,7 @@ public final class AutonMode {
 	
 	
 	public static Builder builder(Robot robot){
+		Validate.notNull(robot);
 		return new Builder(robot);
 	}
 	
@@ -58,6 +58,7 @@ public final class AutonMode {
 		
 		private Builder(Robot bot){
 			robot = bot;
+			Validate.notNull(robot,"Robot cAant be null");
 			comp = robot.getComponentManager();
 		}
 		
