@@ -57,7 +57,7 @@ public class AutonManager {
 		Validate.isTrue(init,ERRORnot);
 		String[] descs = new String[modes.size()];
 		for(int i = 0; i< modes.size(); i++){
-			descs[i] = modes.get(i).getDescription();
+			descs[i] = modes.get(i).getName();
 		}
 		return descs;
 	}
@@ -74,15 +74,15 @@ public class AutonManager {
 		
 
 		return new AutonMode[]{
-				 AutonMode.builder(robot).setDescription("Blank Auton").build(),
+				robot.makeAuton("Blank").build(),
 				 
-				 AutonMode.builder(robot).setDescription("Drive forward")
+				 robot.makeAuton("Drive forward")
 					.driveForward(0.5)
 					.delaySecond(3)
 					.driveHalt()
 					.build(),
 					
-				AutonMode.builder(robot).setDescription("Middle gear position")
+			robot.makeAuton("Middle gear position")
 					.driveForward(.3)
 					.delaySecond(2)
 					.driveHalt()
@@ -94,7 +94,7 @@ public class AutonManager {
 					.gearClose()
 					.build(),
 					
-					AutonMode.builder(robot).setDescription("Left gear position")
+					robot.makeAuton("Left gear position")
 					.driveForward(.4)
 					.delaySecond(4)
 					.driveHalt()
@@ -113,7 +113,7 @@ public class AutonManager {
 					.delay(250)
 					.build(),
 					
-			 AutonMode.builder(robot).setDescription("Right gear position")
+			robot.makeAuton("Right gear position")
 				.driveForward(.4)
 				.delaySecond(4)
 				.driveHalt()

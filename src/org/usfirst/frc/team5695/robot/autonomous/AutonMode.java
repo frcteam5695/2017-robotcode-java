@@ -15,16 +15,16 @@ import edu.wpi.first.wpilibj.Timer;
 
 public final class AutonMode {
 	private final List<Step> steps;
-	private final String description;
+	private final String name;
 	
-	private AutonMode(List<Step> steps, String desc){
+	private AutonMode(List<Step> steps, String name){
 		this.steps = Collections.unmodifiableList(steps);
 		
-		description = desc;
+		this.name = name;
 		
 	}
-	public String getDescription(){
-		return description;
+	public String getName(){
+		return name;
 	}
 	
 	
@@ -45,9 +45,9 @@ public final class AutonMode {
 
 	
 	
-	public static Builder builder(Robot robot){
+	public static Builder builder(Robot robot, String name){
 		Validate.notNull(robot);
-		return new Builder(robot);
+		return new Builder(robot,name);
 	}
 	
 	
@@ -55,10 +55,11 @@ public final class AutonMode {
 		private Robot robot;
 		private ComponentManager comp;
 		private List<Step> steps = new LinkedList<>();
-		private String desc = "Empty";
+		private String name = "Empty";
 		
-		private Builder(Robot bot){
+		private Builder(Robot bot, String name){
 			robot = bot;
+			this.name = name;
 			Validate.notNull(robot,"Robot cAant be null");
 			comp = robot.getComponentManager();
 		}
@@ -115,27 +116,27 @@ public final class AutonMode {
 		}
 		
 		public Builder delaySecond(double seconds){
-			steps.add( ()-> {Timer.delay(seconds);});
+			steps.add( ()-> {
+				
+				try{Thread.sleep((long) (seconds*1000));}
+				catch(Exception c){}
+				});
 			return this;
 		}
 		
-		public Builder delay(double ms){
-			steps.add( ()-> {Timer.delay(ms/1000);});
+		public Builder delay(long ms){
+			steps.add( ()-> {
+				try{Thread.sleep(ms);}
+				catch(Exception c){}
+			});
 			return this;
 		}
 		
-		
-		
-		public Builder setDescription(String desc){
-		this.desc = desc;
-			return this;
-			
-		}
 		
 		
 		
 		public AutonMode build(){
-			return new AutonMode(steps,desc);
+			return new AutonMode(steps,name);
 		}
 	}
 

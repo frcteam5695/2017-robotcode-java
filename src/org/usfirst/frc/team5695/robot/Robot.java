@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5695.robot;
 
 import org.usfirst.frc.team5695.robot.autonomous.AutonManager;
+import org.usfirst.frc.team5695.robot.autonomous.AutonMode;
 import org.usfirst.frc.team5695.robot.component.ComponentManager;
 import org.usfirst.frc.team5695.robot.component.Controller;
 import org.usfirst.frc.team5695.robot.utility.Dashboard;
@@ -113,6 +114,10 @@ public final class Robot extends IterativeRobot {
 		running  = false;
 	}
 	
+	public AutonMode.Builder makeAuton(String name)
+	{
+		return AutonMode.builder(this, name);
+	}
 	@Override
 	public void autonomousInit() {
 		autoSelected = chooser.getSelected();
