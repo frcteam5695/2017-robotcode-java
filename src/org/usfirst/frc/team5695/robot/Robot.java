@@ -26,24 +26,20 @@ public final class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	
-	private static Robot instance;
+	
+	
 	private ComponentManager components;
 	private AutonManager autonManager;
 	private Dashboard dashboard;
+	
 	private int currentMode = 0;
 	private boolean running = false;
 	
-	private Thread mainLoop = new Thread(){
-		public void run(){
-		
-		}
-	};
+
 	
 
 	
-	public static Robot get(){
-		return instance;
-	}
+
 	
 	public ComponentManager getComponentManager(){
 		return components;
@@ -54,6 +50,19 @@ public final class Robot extends IterativeRobot {
 	public void cleanUp(){
 		components.clean();
 	}
+	
+	public void disabledInit(){
+		
+	}
+	
+	public void disabledPeriodic(){
+		
+	}
+	
+	public void robotPeriodic(){
+		currentMode = dashboard.getAuton();
+		dashboard.sendAutonDesc(currentMode);
+	}
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -61,27 +70,28 @@ public final class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		dashboard = new Dashboard(this);
-		instance = this;
+		
+	
 		(components = new ComponentManager()).init();;
 		
 		
 		(autonManager = new AutonManager(this)).init();;
 		
 		running  = true;
-		mainLoop.start();
+		//mainLoop.start();
 		
 		
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser); 
-		while(running){
+		/*while(running){
 			currentMode = dashboard.getAuton();
 			dashboard.sendAutonDesc(currentMode);
 		
 		
 		
 			Timer.delay(0.02);
-		}
+		}*/
 		
 		/////
 	
@@ -130,22 +140,24 @@ public final class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during operator control
 	 */
-	@Override
+	
 	public void teleopPeriodic() {
 		Controller ce = components.getController();
+		components.getSolenoidBallGate().setOpen(ce.getButtonX());
+		components.getSolenoidGear().setOpen(ce.getButtonB());
 		
 		components.getMotorClimb().setEnabled(ce.getButtonY());
 		components.getMotorDrive().drive(-ce.getAxisX(Hand.kLeft),ce.getAxisY(Hand.kLeft), ce.getAxisX(Hand.kRight));
-		components.getSolenoidBallGate().setOpen(ce.getButtonX());
-		components.getSolenoidGear().setOpen(ce.getButtonB());
 		
 	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
+
 	@Override
-	public void testPeriodic() {
+	public void teleopInit(){
+		
 	}
 	
 	public static IllegalStateException EXalreadyInit(){

@@ -1,17 +1,6 @@
 package org.usfirst.frc.team5695.robot.component;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.Validate;
-
 import org.usfirst.frc.team5695.robot.Robot;
-
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.TalonSRX;
-import edu.wpi.first.wpilibj.XboxController;
 
 public class ComponentManager implements IElement{
 	private boolean init = false;
@@ -29,7 +18,7 @@ public class ComponentManager implements IElement{
 		init = true;
 		(motorDrive = new MotorDrivePWM()).init();
 		(controller = new Controller()).init();
-		(motorClimb = new MotorClimb()).init();
+		(motorClimb = new MotorClimbPWM()).init();
 		(gearSol = new SolenoidGear()).init();
 		(ballSol = new SolenoidBallGate()).init();
 		

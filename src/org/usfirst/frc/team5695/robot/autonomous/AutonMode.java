@@ -6,10 +6,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang3.Validate;
 import org.usfirst.frc.team5695.robot.Robot;
 import org.usfirst.frc.team5695.robot.component.ComponentManager;
+import org.usfirst.frc.team5695.robot.utility.Validate;
 
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
 
 public final class AutonMode {
@@ -34,7 +35,7 @@ public final class AutonMode {
 	public void start(){
 		 new Thread(()->{
 				Iterator<Step> ii = steps.iterator();
-				while(ii.hasNext()){
+				while(ii.hasNext() && RobotState.isAutonomous()){
 					ii.next().run();
 				}
 				
