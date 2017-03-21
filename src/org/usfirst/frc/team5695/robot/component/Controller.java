@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 public class Controller implements IElement {
 	private boolean init = false;
-	public static final double DEADZONE = .1;
 
 		private XboxController controller;
 		
@@ -51,12 +50,12 @@ public class Controller implements IElement {
 		
 		public double getAxisX(Hand hand){
 			if(!init){throw Robot.EXnotInit();}
-			return deadzone1(controller.getX(hand), DEADZONE);	
+			return deadzone(controller.getX(hand));	
 		}
 		
 		public double getAxisY(Hand hand){
 			if(!init){throw Robot.EXnotInit();}
-			return deadzone1(controller.getY(hand), DEADZONE);	
+			return deadzone(controller.getY(hand));	
 		}
 		
 		public double getAxisXRaw(Hand hand){
@@ -84,10 +83,36 @@ public class Controller implements IElement {
 			return controller.getStickButton(hand);
 		}
 		
-		private double deadzone1(double input, double limit){
-			double sign = Math.signum(input);
-			double output = Math.max(1 / (1 - limit) * (input * sign - limit), 0)* sign;
-			return output; 
+		public double deadzone(double input){
+			return deadzone1(input,0.1,0.3);
+		}
+		
+		
+		/**
+		 * @param input - [0,1] the value to send to the motor
+		 * 
+		 * @param deadzone - the minimal input to accept
+		 * 
+		 * @param resistance - this is the curvature of the graph
+		 * 	when resistance = deadzone, the graph is linear, when larger the graph become more 
+		 * exponential. resistance is not allowed to be lower than the deadzone.
+		 * 
+		 * */
+		private double deadzone1(double input, double deadzone, double resistance){
+			
+			// The minimal value so that the graph is at least linear
+			double minVal = Math.max(deadzone, resistance);
+			
+			// the exponent to modify the input with
+			double exp = Math.log(deadzone) / Math.log(minVal);
+			
+			/* if the input is larger than the  deadzone then
+			 * return the modified value; else return 0
+			 */
+			 
+			return Math.abs(input) > minVal ? Math.pow(input, exp) : 0;
+			
+		
 		}
 	
 		public enum DPad{
