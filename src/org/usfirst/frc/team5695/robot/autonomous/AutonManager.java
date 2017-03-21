@@ -70,19 +70,23 @@ public class AutonManager {
 		return modes;
 	}
 	
+	public AutonMode.Builder makeAuton(String name)
+	{
+		return  AutonMode.builder(robot, name);
+	}
 	private AutonMode[] makeModes(){
 		
 
 		return new AutonMode[]{
-				robot.makeAuton("Blank").build(),
+				makeAuton("Blank").build(),
 				 
-				 robot.makeAuton("Drive forward")
+				 makeAuton("Drive forward")
 					.driveForward(0.5)
 					.delaySecond(3)
 					.driveHalt()
 					.build(),
 					
-			robot.makeAuton("Middle gear position")
+			makeAuton("Middle gear position")
 					.driveForward(.3)
 					.delaySecond(2)
 					.driveHalt()
@@ -94,7 +98,7 @@ public class AutonManager {
 					.gearClose()
 					.build(),
 					
-					robot.makeAuton("Left gear position")
+					makeAuton("Left gear position")
 					.driveForward(.4)
 					.delaySecond(4)
 					.driveHalt()
@@ -113,7 +117,7 @@ public class AutonManager {
 					.delay(250)
 					.build(),
 					
-			robot.makeAuton("Right gear position")
+			makeAuton("Right gear position")
 				.driveForward(.4)
 				.delaySecond(4)
 				.driveHalt()

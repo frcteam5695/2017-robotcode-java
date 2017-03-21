@@ -114,10 +114,7 @@ public final class Robot extends IterativeRobot {
 		running  = false;
 	}
 	
-	public AutonMode.Builder makeAuton(String name)
-	{
-		return AutonMode.builder(this, name);
-	}
+
 	@Override
 	public void autonomousInit() {
 		autoSelected = chooser.getSelected();
