@@ -110,7 +110,7 @@ public class Controller implements IElement {
 			 * return the modified value; else return 0
 			 */
 			 
-			return Math.abs(input) > minVal ? Math.pow(input, exp) : 0;
+			return Math.abs(input) > deadzone ? Math.pow(input, exp) : 0;
 			
 		
 		}
