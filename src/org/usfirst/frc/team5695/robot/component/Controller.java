@@ -99,18 +99,23 @@ public class Controller implements IElement {
 		 * 
 		 * */
 		private double deadzone1(double input, double deadzone, double resistance){
+			//the sign of the input
+			double sign = Math.signum(input);
+			
 			
 			// The minimal value so that the graph is at least linear
 			double minVal = Math.max(deadzone, resistance);
 			
 			// the exponent to modify the input with
+			//Insures graph is always linear
 			double exp = Math.log(deadzone) / Math.log(minVal);
 			
 			/* if the input is larger than the  deadzone then
 			 * return the modified value; else return 0
 			 */
 			 
-			return Math.abs(input) > deadzone ? Math.pow(input, exp) : 0;
+			double input0 = Math.abs(input) ;
+			return input0 > deadzone ? Math.pow(input0, exp)*sign : 0;
 			
 		
 		}
