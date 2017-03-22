@@ -72,7 +72,7 @@ public class AutonManager {
 	
 	public AutonMode.Builder makeAuton(String name)
 	{
-		return  AutonMode.builder(robot, name);
+		return  new AutonMode.Builder(robot, name);
 	}
 	private AutonMode[] makeModes(){
 		

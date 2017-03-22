@@ -45,10 +45,6 @@ public final class AutonMode {
 
 	
 	
-	public static Builder builder(Robot robot, String name){
-		Validate.notNull(robot);
-		return new Builder(robot,name);
-	}
 	
 	
 	public static class Builder{
@@ -57,7 +53,7 @@ public final class AutonMode {
 		private List<Step> steps = new LinkedList<>();
 		private String name = "Empty";
 		
-		private Builder(Robot bot, String name){
+		protected Builder(Robot bot, String name){
 			robot = bot;
 			this.name = name;
 			Validate.notNull(robot,"Robot cAant be null");
