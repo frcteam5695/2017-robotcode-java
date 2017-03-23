@@ -87,6 +87,13 @@ public class Controller implements IElement {
 			return deadzone1(input,0.1,0.3);
 		}
 		
+		/***
+		 * 
+		 * A simple deadzone equation ,  d c ff
+		 * **/
+		private double deadzone0(double input, double deadzone){
+			return Math.abs(input) > deadzone ? input : 0;
+		}
 		
 		/**
 		 * @param input - [0,1] the value to send to the motor

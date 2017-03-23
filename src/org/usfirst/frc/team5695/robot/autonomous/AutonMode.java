@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
 public final class AutonMode {
 	private final List<Step> steps;
 	private final String name;
+	private final Command cmd;
 	
 	private AutonMode(List<Step> steps, String name){
 		this.steps = Collections.unmodifiableList(steps);
@@ -46,7 +47,6 @@ public final class AutonMode {
 	
 	
 	
-	
 	public static class Builder{
 		private Robot robot;
 		private ComponentManager comp;
@@ -71,62 +71,8 @@ public final class AutonMode {
 			
 		}
 		
-		public Builder driveForward(double speed){
-			steps.add( ()->{comp.getMotorDrive().driveForward(speed);});
-			return this;
-		}
 		
-		public Builder driveStrafe(double speed){
-			steps.add( ()->{comp.getMotorDrive().driveStrafe(speed);});
-			return this;
-		}
-		
-		public Builder driveTurn(double speed){
-			steps.add( ()->{comp.getMotorDrive().driveTurn(speed);});
-			return this;
-		}
-		
-		public Builder driveHalt(){
-			steps.add( ()->{comp.getMotorDrive().halt();});
-			return this;
-		}
-		
-		public Builder gearOpen(){
-			steps.add( ()->{comp.getSolenoidGear().open();});
-			return this;
-		}
-		
-		public Builder gearClose(){
-			steps.add( ()->{comp.getSolenoidGear().close();});
-			return this;
-		}
-		
-		public Builder ballGateOpen(){
-			steps.add( ()->{comp.getSolenoidBallGate().open();});
-			return this;
-		}
-		
-		public Builder ballGateClose(){
-			steps.add( ()->{comp.getSolenoidBallGate().close();});
-			return this;
-		}
-		
-		public Builder delaySecond(double seconds){
-			steps.add( ()-> {
-				
-				try{Thread.sleep((long) (seconds*1000));}
-				catch(Exception c){}
-				});
-			return this;
-		}
-		
-		public Builder delay(long ms){
-			steps.add( ()-> {
-				try{Thread.sleep(ms);}
-				catch(Exception c){}
-			});
-			return this;
-		}
+
 		
 		
 		
