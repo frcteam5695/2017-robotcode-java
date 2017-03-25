@@ -47,7 +47,7 @@ import edu.wpi.first.wpilibj.TalonSRX;
 	@Override
 	public void drive(double strafe, double forward, double rotation){
 		if(!init){throw Robot.EXnotInit();}
-			robotDrive.mecanumDrive_Cartesian(strafe, forward, rotation,0.0);
+			robotDrive.mecanumDrive_Cartesian(strafe, -forward, rotation,0.0);
 	}
 	
 	/***

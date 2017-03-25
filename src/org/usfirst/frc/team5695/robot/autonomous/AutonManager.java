@@ -14,24 +14,12 @@ public class AutonManager {
 	private static final String ERRORnot = "AutonManager was not initialized!";
 	private static final String ERRORis = "AutonManager was already initialized!";
 	
-	private boolean init = false;
-	private List<AutonMode> modes ;
+	private boolean init = false;// Is the manager initialized
+	private List<AutonMode> modes ;// List of possible autons
 	private Robot robot;
-	private ComponentManager components;
-	public final Command cmd;
+	private ComponentManager components;// Used to access the motors,senors, etc
+	public final Command cmd; //Used to supply common Auton commands
 	
-	
-/*public AutonMode
-	
-	driveForward,
-	blankAuto, gearMid,
-			
-	gearRight,
-	
-	gearLeft
-	
-	
-	;*/
 	
 	public AutonManager(Robot robot){
 		Validate.notNull(robot,"Dependencies cannot be null");
@@ -56,7 +44,7 @@ public class AutonManager {
 		
 	}
 	
-	public String[] getDesc(){
+	public String[] getAutonNames(){
 		Validate.isTrue(init,ERRORnot);
 		String[] descs = new String[modes.size()];
 		for(int i = 0; i< modes.size(); i++){
@@ -65,7 +53,7 @@ public class AutonManager {
 		return descs;
 	}
 	
-	public int getSize(){
+	public int getAutonAmount(){
 		return modes.size();
 	}
 	
@@ -79,7 +67,7 @@ public class AutonManager {
 	}
 	
 	/***
-	 * A class of preset common commands for auton
+	 * A class of preset common commands for autonomous modes
 	 * */
 	public class Command{
 		final ComponentManager comp;
@@ -135,16 +123,22 @@ public class AutonManager {
 			
 		}	
 		
+		
+		/***
+		 * Performs a command over a time period.
+		 * **/
 		public Step timedStep(Step step, int ms){
+			final int delay = 50;//wait 50 ms each step
 			return ()->{
-				final int cycles = ms/50;
+				
+				final int cycles = ms/delay;
 				try {
 					for(int i = 0; i< cycles; i++){
 						if(!RobotState.isAutonomous())break;
 					
 							step.run();
 					
-							Thread.sleep(50);
+							Thread.sleep(delay);
 					
 					}
 				} catch (InterruptedException e) {
@@ -171,54 +165,48 @@ public class AutonManager {
 
 		return new AutonMode[]{
 				makeAuton("Blank").build(),
-				 
-				 makeAuton("Drive forward").addSteps(
-						 	cmd.timedStep(cmd.driveForward(0.5),3000),
-						 	cmd.driveHalt()
-						 )
-				 
-
-					.build(),
-					
-			makeAuton("Middle gear position").addSteps(
-					cmd.timedStep(cmd.driveForward(.3),2000),
-					cmd.driveHalt(),
-					cmd.timedStep(cmd.gearOpen(), 500),
-					cmd.timedStep(cmd.driveForward(-0.3),1500),
-					cmd.driveHalt(),
-					cmd.ballGateClose()
-					).build(),
-					
-					makeAuton("Left gear position").addSteps(
-							cmd.timedStep(cmd.driveForward(0.4), 4000),
-							cmd.driveHalt(),
-							cmd.timedStep(cmd.driveStrafe(0.3), 1000),
-							cmd.timedStep(cmd.driveForward(0.4),1 ),
-							cmd.driveHalt(),
-							cmd.timedStep(cmd.gearOpen(),1500),
-							cmd.timedStep(cmd.driveForward(0.3), 500),
-							cmd.timedStep(cmd.driveHalt(), 500),
-							cmd.driveHalt()
-							
-							).build(),
-					
-					
-			makeAuton("Right gear position").addSteps(
-					cmd.timedStep(cmd.driveForward(0.4), 4000),
-					cmd.driveHalt(),
-					cmd.timedStep(cmd.driveStrafe(-0.3), 1000),
-					cmd.timedStep(cmd.driveForward(0.4),1 ),
-					cmd.driveHalt(),
-					cmd.timedStep(cmd.gearOpen(),1500),
-					cmd.timedStep(cmd.driveForward(0.3), 500),
-					cmd.timedStep(cmd.driveHalt(), 500),
-					cmd.driveHalt()
-					).build()
-			
+				
+				makeAuton("Drive forward").addSteps(
+						cmd.timedStep(cmd.driveForward(0.3),5000),
+						cmd.driveHalt()
+						).build(),
+				
+				makeAuton("Drop gear {Middle}").addSteps(
+						cmd.timedStep(cmd.driveForward(.3),2750),
+						cmd.driveHalt(),
+						cmd.timedStep(cmd.gearOpen(), 1500),
+						cmd.timedStep(cmd.driveForward(-0.3),1500),
+						cmd.driveHalt(),
+						cmd.ballGateClose()
+						).build(),
+				
+				makeAuton("Drop Gear {Left}").addSteps(
+						cmd.timedStep(cmd.driveForward(.3),2750),
+						cmd.driveHalt(),
+						cmd.timedStep(cmd.driveTurn(-.3), 2000),/// turning
+						cmd.driveHalt(),
+						cmd.timedStep(cmd.driveForward(.3),2750),
+						cmd.driveHalt(),
+						cmd.timedStep(cmd.gearOpen(),1500),
+						cmd.timedStep(cmd.driveForward(-0.3), 500),
+						cmd.gearClose(),
+						cmd.driveHalt()
+						).build(),
+				
+				makeAuton("Right gear position").addSteps(
+						cmd.timedStep(cmd.driveForward(.3),2750),
+						cmd.driveHalt(),
+						cmd.timedStep(cmd.driveTurn(.3), 2000),/// turning
+						cmd.driveHalt(),
+						cmd.timedStep(cmd.driveForward(.3),2750),
+						cmd.driveHalt(),
+						cmd.timedStep(cmd.gearOpen(),1500),
+						cmd.timedStep(cmd.driveForward(-0.3), 500),
+						cmd.gearClose(),
+						cmd.driveHalt()
+						).build()
 				};
-	}
-	
-
+		}
 	}
 // ()-> {},
 	

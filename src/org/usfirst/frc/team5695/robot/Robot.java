@@ -149,7 +149,7 @@ public final class Robot extends IterativeRobot {
 		components.getSolenoidGear().setOpen(ce.getButtonB());
 		
 		components.getMotorClimb().setEnabled(ce.getButtonY());
-		components.getMotorDrive().drive(-ce.getAxisX(Hand.kLeft),ce.getAxisY(Hand.kLeft), ce.getAxisX(Hand.kRight));
+		components.getMotorDrive().drive(ce.getAxisX(Hand.kRight),ce.getAxisY(Hand.kLeft), ce.getAxisX(Hand.kLeft));
 		
 	}
 
