@@ -14,6 +14,7 @@ public class Controller implements IElement {
 		private XboxController controller;
 		
 		protected Controller(){}
+		private double exponent = 0.0;
 		
 		public void init(){
 			if(init){throw Robot.EXalreadyInit();}
@@ -107,22 +108,26 @@ public class Controller implements IElement {
 		 * */
 		private double deadzone1(double input, double deadzone, double resistance){
 			//the sign of the input
+			
 			double sign = Math.signum(input);
 			
 			
-			// The minimal value so that the graph is at least linear
-			double minVal = Math.max(deadzone, resistance);
+			 
+			double input0 = Math.abs(input) ;
 			
-			// the exponent to modify the input with
-			//Insures graph is always linear
-			double exp = Math.log(deadzone) / Math.log(minVal);
+			if(0 == exponent){
+				// The minimal value so that the graph is at least linear
+				double minVal = Math.max(deadzone, resistance);
+			
+				// the exponent to modify the input with
+				//Insures graph is always linear
+				exponent = Math.log(deadzone) / Math.log(minVal);
+			}
 			
 			/* if the input is larger than the  deadzone then
 			 * return the modified value; else return 0
 			 */
-			 
-			double input0 = Math.abs(input) ;
-			return input0 > deadzone ? Math.pow(input0, exp)*sign : 0;
+			return input0 > deadzone ? Math.pow(input0, exponent)*sign : 0;
 			
 		
 		}
