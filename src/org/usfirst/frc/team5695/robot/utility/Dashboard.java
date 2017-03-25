@@ -17,12 +17,12 @@ public class Dashboard {
 	
 	public int getAuton(){
 		int ind = (int)SmartDashboard.getNumber("Custom\\Auton", 0);
-		return (ind) < robot.getAutonManager().getSize() ? ind : 0;
+		return (ind) < robot.getAutonManager().getAutonAmount() ? ind : 0;
 	}
 	
 	public void sendAutonDesc(int id){
 		SmartDashboard.putString("Custom\\AutonDesc", 
-				robot.getAutonManager().getAutons().get(id).getDescription());
+				robot.getAutonManager().getAutons().get(id).getName());
 	
 	//	SmartDashboard.putString(key, value).putData("Custom\\AutonDesc", );
 	}

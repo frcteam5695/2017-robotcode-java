@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
 public final class AutonMode {
 	private final List<Step> steps;
 	private final String name;
-	private final Command cmd;
+
 	
 	private AutonMode(List<Step> steps, String name){
 		this.steps = Collections.unmodifiableList(steps);
