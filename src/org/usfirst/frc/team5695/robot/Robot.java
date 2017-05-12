@@ -146,7 +146,6 @@ public final class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Controller ce = components.getController();
 		components.getSolenoidBallGate().setOpen(ce.getButtonX());
-		components.getSolenoidGear().setOpen(ce.getButtonB());
 		
 		components.getMotorClimb().setEnabled(ce.getButtonY());
 		components.getMotorDrive().drive(ce.getAxisX(Hand.kRight),ce.getAxisY(Hand.kLeft), ce.getAxisX(Hand.kLeft));

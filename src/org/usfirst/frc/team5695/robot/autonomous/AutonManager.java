@@ -173,11 +173,7 @@ public class AutonManager {
 				
 				makeAuton("Drop gear {Middle}").addSteps(
 						cmd.timedStep(cmd.driveForward(.3),2750),
-						cmd.driveHalt(),
-						cmd.timedStep(cmd.gearOpen(), 1500),
-						cmd.timedStep(cmd.driveForward(-0.3),1500),
-						cmd.driveHalt(),
-						cmd.ballGateClose()
+						cmd.driveHalt()
 						).build(),
 				
 				makeAuton("Drop Gear {Left}").addSteps(
@@ -186,10 +182,6 @@ public class AutonManager {
 						cmd.timedStep(cmd.driveTurn(-.3), 2000),/// turning
 						cmd.driveHalt(),
 						cmd.timedStep(cmd.driveForward(.3),2750),
-						cmd.driveHalt(),
-						cmd.timedStep(cmd.gearOpen(),1500),
-						cmd.timedStep(cmd.driveForward(-0.3), 500),
-						cmd.gearClose(),
 						cmd.driveHalt()
 						).build(),
 				
@@ -199,10 +191,6 @@ public class AutonManager {
 						cmd.timedStep(cmd.driveTurn(.3), 2000),/// turning
 						cmd.driveHalt(),
 						cmd.timedStep(cmd.driveForward(.3),2750),
-						cmd.driveHalt(),
-						cmd.timedStep(cmd.gearOpen(),1500),
-						cmd.timedStep(cmd.driveForward(-0.3), 500),
-						cmd.gearClose(),
 						cmd.driveHalt()
 						).build()
 				};
