@@ -1,8 +1,8 @@
 package org.usfirst.frc.team5695.robot.component;
 
-import org.usfirst.frc.team5695.robot.utility.Cleanable;
+import org.usfirst.frc.team5695.robot.utility.Disposable;
 
-interface IElement extends Cleanable {
+interface IElement extends Disposable {
 	 void init();
 	
  }

@@ -52,7 +52,7 @@ public class MotorClimbPWM implements MotorClimb {
 	}
 	
 	@Override
-	public void clean() {
+	public void dispose() {
 		if(!init){throw Robot.EXnotInit();}
 		init = false;
 		

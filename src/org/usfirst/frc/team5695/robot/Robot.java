@@ -1,7 +1,10 @@
 package org.usfirst.frc.team5695.robot;
 
+import java.util.concurrent.ExecutorService;
+
 import org.usfirst.frc.team5695.robot.autonomous.AutonManager;
 import org.usfirst.frc.team5695.robot.autonomous.AutonMode;
+import org.usfirst.frc.team5695.robot.autonomous.StepCommands;
 import org.usfirst.frc.team5695.robot.component.ComponentManager;
 import org.usfirst.frc.team5695.robot.component.Controller;
 import org.usfirst.frc.team5695.robot.utility.Dashboard;
@@ -32,6 +35,7 @@ public final class Robot extends IterativeRobot {
 	private ComponentManager components;
 	private AutonManager autonManager;
 	private Dashboard dashboard;
+
 	
 	private int currentMode = 0;
 	private boolean running = false;
@@ -49,7 +53,7 @@ public final class Robot extends IterativeRobot {
 		return autonManager;
 	}
 	public void cleanUp(){
-		components.clean();
+		components.dispose();
 	}
 	
 	public void disabledInit(){
@@ -74,7 +78,7 @@ public final class Robot extends IterativeRobot {
 		
 	
 		(components = new ComponentManager()).init();;
-		
+		StepCommands.init(components);
 		
 		(autonManager = new AutonManager(this)).init();;
 		
@@ -112,6 +116,8 @@ public final class Robot extends IterativeRobot {
 	
 	public void stopRobot(){
 		running  = false;
+		StepCommands.dispose();
+		autonManager.dispose();
 	}
 	
 
@@ -146,6 +152,7 @@ public final class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Controller ce = components.getController();
 		components.getSolenoidBallGate().setOpen(ce.getButtonX());
+		components.getSolenoidGear().setOpen(ce.getButtonB());
 		
 		components.getMotorClimb().setEnabled(ce.getButtonY());
 		components.getMotorDrive().drive(ce.getAxisX(Hand.kRight),ce.getAxisY(Hand.kLeft), ce.getAxisX(Hand.kLeft));
