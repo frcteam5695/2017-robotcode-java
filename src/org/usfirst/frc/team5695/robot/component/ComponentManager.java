@@ -49,15 +49,15 @@ public class ComponentManager implements IElement{
 		return ballSol;
 	}
 	@Override
-	public void clean() {
+	public void dispose() {
 		if(!init){throw Robot.EXnotInit();}
 		init = false;
 		
-		motorDrive.clean();
-		controller.clean();
-		motorClimb.clean();
-		gearSol.clean();
-		ballSol.clean();
+		motorDrive.dispose();
+		controller.dispose();
+		motorClimb.dispose();
+		gearSol.dispose();
+		ballSol.dispose();
 		
 		motorDrive = null;
 		controller = null;

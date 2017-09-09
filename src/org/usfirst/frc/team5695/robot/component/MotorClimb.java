@@ -21,6 +21,6 @@ public interface MotorClimb extends IElement {
 	
 	public boolean getSpeed();
 	
-	
-	public void clean();
+	@Override
+	public void dispose();
 }

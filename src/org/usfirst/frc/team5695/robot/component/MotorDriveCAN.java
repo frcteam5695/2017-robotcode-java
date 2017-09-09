@@ -114,7 +114,7 @@ import edu.wpi.first.wpilibj.TalonSRX;
 	}
 	
 	@Override
-	public void clean() {
+	public void dispose() {
 		if(!init){throw Robot.EXnotInit();}
 		init = false;
 		

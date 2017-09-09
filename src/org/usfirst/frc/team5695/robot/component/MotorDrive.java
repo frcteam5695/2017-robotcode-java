@@ -61,7 +61,7 @@ import edu.wpi.first.wpilibj.TalonSRX;
 	public void halt();
 	
 	@Override
-	public void clean() ;
+	public void dispose() ;
 
 	/**
 	 * 

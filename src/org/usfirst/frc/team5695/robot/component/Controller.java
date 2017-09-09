@@ -169,7 +169,7 @@ WEST( 270),		NONE(-1),		EAST(90),
 	
 
 	@Override
-	public void clean() {
+	public void dispose() {
 		if(!init){throw Robot.EXnotInit();}
 		init = false;
 		

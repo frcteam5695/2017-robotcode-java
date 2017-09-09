@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5695.robot.autonomous;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -16,12 +17,11 @@ import edu.wpi.first.wpilibj.Timer;
 public final class AutonMode {
 	private final List<Step> steps;
 	private final String name;
-
 	
-	private AutonMode(List<Step> steps, String name){
-		this.steps = Collections.unmodifiableList(steps);
-		
-		this.name = name;
+	private AutonMode(Builder builder){
+		Validate.notNull(builder,"AutonMode Builder cannot be null");
+		this.steps = Collections.unmodifiableList(new ArrayList<>(builder.steps));
+		this.name = builder.name;
 		
 	}
 	public String getName(){
@@ -33,18 +33,11 @@ public final class AutonMode {
 		return steps;
 	}
 	
-	public void start(){
-		 new Thread(()->{
-				Iterator<Step> ii = steps.iterator();
-				while(ii.hasNext() && RobotState.isAutonomous()){
-					ii.next().run();
-				}
-				
-			}).start();
-	}
 	
 
-	
+	public static Builder newBuilder( Robot robot,String name) {
+		return new Builder(robot,name);
+	}
 	
 	
 	public static class Builder{
@@ -71,14 +64,8 @@ public final class AutonMode {
 			
 		}
 		
-		
-
-		
-		
-		
-		
 		public AutonMode build(){
-			return new AutonMode(steps,name);
+			return new AutonMode(this);
 		}
 	}
 
